@@ -18,7 +18,7 @@ class aprendicesController extends Controller
         $aprendices = DB::table('tblaprendices')
             ->GET();
         //dd($aprendices);
-        return view('Aprendices.index', compact('aprendices'));
+        return view('aprendices.index', compact('aprendices'));
     }
 
     /**

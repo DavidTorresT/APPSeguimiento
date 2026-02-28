@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\centrosdeformacion;
+use App\Models\regionales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +25,9 @@ class centrosdeformacionController extends Controller
      */
     public function create()
     {
-        //
+        $regionales = regionales::all();
+
+        return view('centrosdeformacion.create', compact('regionales'));
     }
 
     /**
@@ -31,7 +35,31 @@ class centrosdeformacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Codigo' => 'required',
+            'Denominacion' => 'required',
+            'Direccion' => 'required',
+            'tblregionales_Nis' => 'required|exists:tblregionales,Nis',
+        ],
+            [
+                'Codigo.required' => 'El campo Codigo es obligatorio',
+                'Denominacion.required' => 'El campo Denominacion es obligatorio',
+                'Direccion.required' => 'El campo Direccion es obligatorio',
+                'tblregionales_Nis' => 'El campo Regional es obligatorio'
+            ]);
+        /*if ($v->fails()){
+            return back()->with('errors', $v->errors());
+        }*/
+
+        $Centrosdeformacion = new centrosdeformacion();
+        $Centrosdeformacion->Codigo = $request->Codigo;
+        $Centrosdeformacion->Denominacion = $request->Denominacion;
+        $Centrosdeformacion->Direccion = $request->Direccion;
+        $Centrosdeformacion->Observaciones =$request->Observaciones;
+        $Centrosdeformacion->tblregionales_Nis = $request->tblregionales_Nis;
+        $Centrosdeformacion->save();
+
+        return redirect()->route('centrosdeformacion.create')->with('registrar','Centro de formacion registrado correctamente');
     }
 
     /**
@@ -45,24 +73,43 @@ class centrosdeformacionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($Nis)
     {
-        //
+        $centrosdeformacion = centrosdeformacion::findOrFail($Nis);
+        $regionales = regionales::all();
+        return view('centrosdeformacion.edit', compact('centrosdeformacion','regionales'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $Nis)
     {
-        //
+        $request->validate([
+            'Codigo' => 'required',
+            'Denominacion' => 'required',
+            'Direccion' => 'required',
+            'tblregionales_Nis' => 'required',
+        ]);
+
+        $centrosdeformacion = centrosdeformacion::findOrFail($Nis);
+        $centrosdeformacion->Codigo = $request->Codigo;
+        $centrosdeformacion->Denominacion = $request->Denominacion;
+        $centrosdeformacion->Direccion = $request->Direccion;
+        $centrosdeformacion->Observaciones = $request->Observaciones;
+        $centrosdeformacion->tblregionales_Nis = $request->tblregionales_Nis;
+        $centrosdeformacion->save();
+
+        return redirect()->route('centrosdeformacion.index')->with('actualizar','Centro de formacion actualizado correctamente');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($Nis)
     {
-        //
+        centrosdeformacion::destroy($Nis);
+
+        return redirect()->route('centrosdeformacion.index')->with('eliminar','Centro de formacion eliminado correctamente');
     }
 }

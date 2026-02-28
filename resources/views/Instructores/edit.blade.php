@@ -113,6 +113,18 @@
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Rol</label>
+                    <select name="tblrolesadministrativos_Nis" class="form-control ">
+
+                        @foreach($rolesadministrativos as $rol)
+                            <option value="{{ $rol->Nis }}" {{ $instructores->tblrolesadministrativos_Nis == $rol->Nis ? 'selected' : '' }}>
+                                {{ $rol->Descripcion }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <button type="submit" class="btn btn-warning">
                     Actualizar
                 </button>

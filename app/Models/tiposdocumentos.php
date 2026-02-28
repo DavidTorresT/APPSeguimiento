@@ -9,6 +9,7 @@ class tiposdocumentos extends Model
 {
     use HasFactory;
     protected $primaryKey = 'Nis';
+    public $incrementing = true;
     protected $table = 'tbltiposdocumentos';
     protected $fillable = [
         /*'Nis',*/ 'Denominacion', 'Observaciones'

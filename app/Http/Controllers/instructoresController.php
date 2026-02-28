@@ -143,6 +143,7 @@ class instructoresController extends Controller
         $instructores->Sexo = $request->Sexo;
         $instructores->FechaNac = $request->FechaNac;
         $instructores->tbleps_Nis = $request->tbleps_Nis;
+        $instructores->tblrolesadministrativos_Nis = $request->tblrolesadministrativos_Nis;
         $instructores->save();
 
         return redirect()->route('instructores.index')->with('actualizar','Instructor actualizado correctamente');

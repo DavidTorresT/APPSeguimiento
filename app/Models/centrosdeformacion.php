@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class centrosdeformacion extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'Nis';
+    public $incrementing = true;
     protected $table = 'tblcentrosdeformacion';
     protected $fillable = [
-        'Nis', 'Codigo', 'Denominacion', 'Direccion', 'Observaciones', 'tblregionales_Nis'
+        /*'Nis',*/ 'Codigo', 'Denominacion', 'Direccion', 'Observaciones', 'tblregionales_Nis'
     ];
     public $timestamps = false;
 }

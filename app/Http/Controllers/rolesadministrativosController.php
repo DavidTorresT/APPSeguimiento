@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\rolesadministrativos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +24,7 @@ class rolesadministrativosController extends Controller
      */
     public function create()
     {
-        //
+        return view('rolesadministrativos.create');
     }
 
     /**
@@ -31,7 +32,21 @@ class rolesadministrativosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Descripcion' => 'required',
+        ],
+            [
+                'Descripcion.required' => 'El campo Descripcion es obligatorio',
+            ]);
+        /*if ($v->fails()){
+            return back()->with('errors', $v->errors());
+        }*/
+
+        $Rolesadministrativos = new rolesadministrativos();
+        $Rolesadministrativos->Descripcion = $request->Descripcion;
+        $Rolesadministrativos->save();
+
+        return redirect()->route('rolesadministrativos.create')->with('registrar','Rol registrado correctamente');
     }
 
     /**
@@ -45,24 +60,35 @@ class rolesadministrativosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($Nis)
     {
-        //
+        $rolesadministrativos = rolesadministrativos::findOrFail($Nis);
+        return view('rolesadministrativos.edit', compact('rolesadministrativos'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $Nis)
     {
-        //
+        $request->validate([
+            'Descripcion' => 'required'
+        ]);
+
+        $rolesadministrativos = rolesadministrativos::findOrFail($Nis);
+        $rolesadministrativos->Descripcion = $request->Descripcion;
+        $rolesadministrativos->save();
+
+        return redirect()->route('rolesadministrativos.index')->with('actualizar','Rol actualizado correctamente');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($Nis)
     {
-        //
+        rolesadministrativos::destroy($Nis);
+
+        return redirect()->route('rolesadministrativos.index')->with('eliminar','Rol eliminado correctamente');
     }
 }

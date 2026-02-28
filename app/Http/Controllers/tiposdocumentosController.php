@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\rolesadministrativos;
 use App\Models\tiposdocumentos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +25,7 @@ class tiposdocumentosController extends Controller
      */
     public function create()
     {
-        //
+        return view('tiposdocumentos.create');
     }
 
     /**
@@ -32,7 +33,22 @@ class tiposdocumentosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Denominacion' => 'required',
+        ],
+            [
+                'Denominacion.required' => 'El campo Denominacion es obligatorio',
+            ]);
+        /*if ($v->fails()){
+            return back()->with('errors', $v->errors());
+        }*/
+
+        $Tiposdocumentos = new tiposdocumentos();
+        $Tiposdocumentos->Denominacion = $request->Denominacion;
+        $Tiposdocumentos->Observaciones = $request->Observaciones;
+        $Tiposdocumentos->save();
+
+        return redirect()->route('tiposdocumentos.create')->with('registrar','Tipo de documento registrado correctamente');
     }
 
     /**
@@ -46,24 +62,36 @@ class tiposdocumentosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($Nis)
     {
-        //
+        $tiposdocumentos = tiposdocumentos::findOrFail($Nis);
+        return view('tiposdocumentos.edit', compact('tiposdocumentos'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $Nis)
     {
-        //
+        $request->validate([
+            'Denominacion' => 'required',
+        ]);
+
+        $tiposdocumentos = tiposdocumentos::findOrFail($Nis);
+        $tiposdocumentos->Denominacion = $request->Denominacion;
+        $tiposdocumentos->Observaciones = $request->Observaciones;
+        $tiposdocumentos->save();
+
+        return redirect()->route('tiposdocumentos.index')->with('actualizar','Tipo de documento actualizado correctamente');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($Nis)
     {
-        //
+        tiposdocumentos::destroy($Nis);
+
+        return redirect()->route('tiposdocumentos.index')->with('eliminar','Tipo de documento eliminado correctamente');
     }
 }

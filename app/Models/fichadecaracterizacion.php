@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class fichadecaracterizacion extends Model
 {
     use HasFactory;
-    protected $table = 'tblfichadecaracterizacion';
+
+    protected $primaryKey = 'Nis';
+    public $incrementing = true;
+    protected $table = 'tblfichasdecaracterizacion';
     protected $fillable = [
-        'Nis', 'Codigo', 'Denominacion', 'Cupo', 'FechaInicio', 'FechaFin', 'Observaciones', 'tblprogramasdeformacion_Nis', 'tblcentrosdeformacion_Nis'
+        /*'Nis',*/ 'Codigo', 'Denominacion', 'Cupo', 'FechaInicio', 'FechaFin', 'Observaciones', 'tblprogramasdeformacion_Nis', 'tblcentrosdeformacion_Nis'
     ];
     public $timestamps = false;
 }

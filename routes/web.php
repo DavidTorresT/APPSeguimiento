@@ -22,20 +22,14 @@ Route::get('/', function () {
 });*/
 
 Route::resource('/aprendices', aprendicesController::class);
-
-Route::get('/centrosdeformacion', [centrosdeformacionController::class, 'index'])->name('CentrosdeFormacion.index');
-
-Route::get('/entecoformador', [entecoformadorController::class, 'index'])->name('Entecoformador.index');
-
+Route::resource('/centrosdeformacion', centrosdeformacionController::class);
+Route::resource('/entecoformador', entecoformadorController::class);
 Route::resource('/eps', epsController::class);
-
-Route::get('/fichasdecaracterizacion', [fichasdecaracterizacionController::class, 'index'])->name('FichasdeCaracterizacion.index');
+Route::resource('/fichasdecaracterizacion', fichasdecaracterizacionController::class);
 Route::resource('/instructores', instructoresController::class);
 Route::resource('/programas', programasdeformacionController::class);
-Route::resource('regionales', regionalesController::class);
-
-Route::get('/rolesadministrativos', [rolesadministrativosController::class, 'index'])->name('RolesAdministrativos.index');
-
+Route::resource('/regionales', regionalesController::class);
+Route::resource('/rolesadministrativos', rolesadministrativosController::class);
 Route::resource('/tiposdocumentos', tiposdocumentosController::class);
 
 Route::get('/clear', function () {

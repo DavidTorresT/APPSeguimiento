@@ -44,9 +44,11 @@ class regionalesController extends Controller
             'Denominacion.required' => 'El campo Denominacion es obligatorio',
             'contraseña.required' => 'El campo Contraseña es obligatorio'
         ]);
+
         /*if ($v->fails()){
             return back()->with('errors', $v->errors());
         }*/
+
 
         $Regionales = new regionales();
         $Regionales->Codigo = $request->Codigo;
