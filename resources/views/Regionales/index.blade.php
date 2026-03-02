@@ -69,6 +69,12 @@
 
                                 </form>
 
+                                @foreach($regionales as $regional)
+                                    <a href="{{ asset('Uploads/regionales/'.$regional->docPrueba) }}" target="_blank">
+                                        Ver Documento
+                                    </a>
+                                @endforeach
+
                             </td>
                         </tr>
                     @empty

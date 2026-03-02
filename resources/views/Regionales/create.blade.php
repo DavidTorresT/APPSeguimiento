@@ -36,7 +36,7 @@
                 @endif
 
 
-                <form action="{{ route('regionales.store') }}" method="POST">
+                <form action="{{ route('regionales.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3">
@@ -70,6 +70,14 @@
                         <label class="form-label">Contraseña</label>
                         <input type="password" name="contraseña" class="form-control @error('contraseña') is-invalid @enderror">
                         @error('contraseña')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Documento</label>
+                        <input type="file" name="docPrueba" value="{{ old('docPrueba') }}" class="form-control @error('docPrueba') is-invalid @enderror">
+                        @error('docPrueba')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

@@ -168,3 +168,25 @@
     </div>
 
 @endsection
+
+@section('scripts')
+
+    <!-- Alerta de Registrar -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if(session('registrar'))
+        <script>
+            Swal.fire({
+                title: '¡Registro exitoso!',
+                text : "{{session('registrar')}}",
+                icon: 'success',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                background: '#f8f9fa',
+                backdrop: 'rgba(0,0,0,0.4)'
+            });
+        </script>
+    @endif
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+@endsection

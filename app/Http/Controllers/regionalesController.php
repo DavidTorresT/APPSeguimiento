@@ -33,31 +33,48 @@ class regionalesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'Codigo' => 'required',
-            'Denominacion' => 'required',
-            'contraseña' => 'required'
-        ],
-        [
-            'Codigo.required' => 'El campo Codigo es obligatorio',
-            'Codigo.unique' => 'El Codigo ya existe',
-            'Denominacion.required' => 'El campo Denominacion es obligatorio',
-            'contraseña.required' => 'El campo Contraseña es obligatorio'
-        ]);
+        if ($request->hasFile('docPrueba')) {
 
-        /*if ($v->fails()){
-            return back()->with('errors', $v->errors());
-        }*/
+            $request->validate([
+                'docPrueba' => 'required|file'
+            ]);
+
+            $nomDoc = 'Prueba'.$request['documento'].'.'.$request->file('docPrueba')->extension();
+
+            $request->file('docPrueba')->move(
+                public_path('/Uploads/regionales/'),
+                $nomDoc);
+
+            return back()->with('registrar', 'Documento subido correctamente');
+
+        }
+
+            $request->validate([
+                'Codigo' => 'required',
+                'Denominacion' => 'required',
+                'contraseña' => 'required'
+            ],
+                [
+                    'Codigo.required' => 'El campo Codigo es obligatorio',
+                    'Codigo.unique' => 'El Codigo ya existe',
+                    'Denominacion.required' => 'El campo Denominacion es obligatorio',
+                    'contraseña.required' => 'El campo Contraseña es obligatorio'
+                ]);
+
+            /*if ($v->fails()){
+                return back()->with('errors', $v->errors());
+            }*/
+            $Regionales = new regionales();
+            $Regionales->Codigo = $request->Codigo;
+            $Regionales->Denominacion = $request->Denominacion;
+            $Regionales->Observaciones = $request->Observaciones;
+            $Regionales->contraseña =bcrypt($request->contraseña);
 
 
-        $Regionales = new regionales();
-        $Regionales->Codigo = $request->Codigo;
-        $Regionales->Denominacion = $request->Denominacion;
-        $Regionales->Observaciones = $request->Observaciones;
-        $Regionales->contraseña =bcrypt($request->contraseña);
-        $Regionales->save();
+            $Regionales->save();
 
-        return redirect()->route('regionales.create')->with('registrar','Regional registrada correctamente');
+            return redirect()->route('regionales.create')->with('registrar','Regional registrada correctamente');
+
 
     }
 

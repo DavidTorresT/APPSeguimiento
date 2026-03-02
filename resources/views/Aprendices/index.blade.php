@@ -17,6 +17,26 @@
 
             <div class="table-responsive">
 
+                <form method="GET" action="{{ route('aprendices.index') }}" class="mb-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" name="buscar"
+                                   value="{{ request('buscar') }}"
+                                   class="form-control"
+                                   placeholder="Buscar por numero de documento, nombre o apellido">
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary">
+                                Buscar
+                            </button>
+
+                            <a href="{{ route('aprendices.index') }}" class="btn btn-secondary">
+                                Limpiar
+                            </a>
+                        </div>
+                    </div>
+                </form>
+
                 <table class="table table-striped table-bordered align-middle">
                     <thead class="table-dark">
                     <tr>
@@ -40,7 +60,7 @@
                     @forelse ($aprendices as $aprendiz)
                         <tr>
                             <td>{{ $aprendiz->Nis }}</td>
-                            <td>{{ $aprendiz->tbltiposdocumentos_Nis }}</td>
+                            <td>{{ $aprendiz->tipodocumento->Denominacion ?? 'Sin tipo' }}</td>
                             <td>{{ $aprendiz->NumDoc }}</td>
                             <td>{{ $aprendiz->Nombres }}</td>
                             <td>{{ $aprendiz->Apellidos }}</td>
@@ -48,9 +68,9 @@
                             <td>{{ $aprendiz->Telefono }}</td>
                             <td>{{ $aprendiz->CorreoInstitucional }}</td>
                             <td>{{ $aprendiz->CorreoPersonal }}</td>
-                            <td>{{ $aprendiz->Sexo }}</td>
+                            <td>{{ $aprendiz->sexo_texto }}</td>
                             <td>{{ $aprendiz->FechaNac }}</td>
-                            <td>{{ $aprendiz->tbleps_Nis }}</td>
+                            <td>{{ $aprendiz->eps->Denominacion ?? 'Sin EPS' }}</td>
 
                             <td class="text-center">
 
@@ -85,6 +105,10 @@
                     </tbody>
 
                 </table>
+
+                <div class="mt-3">
+                    {{ $aprendices->links() }}
+                </div>
 
             </div>
 

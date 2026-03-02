@@ -13,13 +13,22 @@ class aprendicesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $aprendices = DB::table('tblaprendices')
-            ->GET();
-        //dd($aprendices);
-        return view('aprendices.index', compact('aprendices'));
+        $buscar = $request->buscar;
+
+        $aprendices = Aprendices::with(['tipodocumento', 'eps'])
+            ->when($buscar, function ($query, $buscar) {
+                $query->where('NumDoc', 'like', "%$buscar%")
+                    ->orWhere('Nombres', 'like', "%$buscar%")
+                    ->orWhere('Apellidos', 'like', "%$buscar%");
+            })
+            ->paginate(10)
+            ->withQueryString(); // mantiener la búsqueda
+
+        return view('aprendices.index', compact('aprendices', 'buscar'));
     }
+
 
     /**
      * Show the form for creating a new resource.

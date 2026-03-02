@@ -16,8 +16,7 @@ class instructoresController extends Controller
      */
     public function index()
     {
-        $instructores = DB::table('tblinstructores')
-            ->GET();
+        $instructores = instructores::all();
         //dd($instructores);
         return view('Instructores.index', compact('instructores'));
     }
