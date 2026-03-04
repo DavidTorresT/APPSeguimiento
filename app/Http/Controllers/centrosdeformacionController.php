@@ -12,12 +12,20 @@ class centrosdeformacionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $centrosdeformacion = DB::table('tblcentrosdeformacion')
-            ->GET();
-        //dd($centrosdeformacion);
-        return view('CentrosdeFormacion.index', compact('centrosdeformacion'));
+        $buscar = $request->buscar;
+
+        $centrosdeformacion = centrosdeformacion::with(['regionales'])
+            ->when($buscar, function ($query, $buscar) {
+                $query->where('Codigo', 'like', "%$buscar%")
+                    ->orWhere('Denominacion', 'like', "%$buscar%")
+                    ->orWhere('tblregionales_Nis', 'like', "%$buscar%");
+            })
+            ->paginate(10)
+            ->withQueryString(); // mantiener la búsqueda
+
+        return view('centrosdeformacion.index', compact('centrosdeformacion', 'buscar'));
     }
 
     /**

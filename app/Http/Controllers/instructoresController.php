@@ -14,11 +14,21 @@ class instructoresController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $instructores = instructores::all();
-        //dd($instructores);
-        return view('Instructores.index', compact('instructores'));
+        $buscar = $request->buscar;
+
+        $instructores = instructores::with(['tipodocumento', 'eps', 'rolesadministrativos'])
+            ->when($buscar, function ($query, $buscar) {
+                $query->where('NumDoc', 'like', "%$buscar%")
+                    ->orWhere('Nombres', 'like', "%$buscar%")
+                    ->orWhere('Apellidos', 'like', "%$buscar%")
+                    ->orWhere('tblrolesadministrativos_Nis', 'like', "%$buscar%");
+            })
+            ->paginate(10)
+            ->withQueryString(); // mantiener la búsqueda
+
+        return view('instructores.index', compact('instructores', 'buscar'));
     }
 
     /**

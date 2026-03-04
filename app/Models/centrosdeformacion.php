@@ -15,4 +15,9 @@ class centrosdeformacion extends Model
         /*'Nis',*/ 'Codigo', 'Denominacion', 'Direccion', 'Observaciones', 'tblregionales_Nis'
     ];
     public $timestamps = false;
+
+    public function regionales()
+    {
+        return $this->belongsTo(Regionales::class, 'tblregionales_Nis', 'Nis');
+    }
 }
