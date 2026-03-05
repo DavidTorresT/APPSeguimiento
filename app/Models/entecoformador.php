@@ -15,4 +15,9 @@ class entecoformador extends Model
         /*'Nis',*/ 'tbltiposdocumentos_Nis', 'NumDoc', 'RazonSocial', 'Direccion', 'Telefono', 'CorreoInstitucional'
     ];
     public $timestamps = false;
+
+    public function tiposdocumentos()
+    {
+        return $this->belongsTo(tiposdocumentos::class, 'tbltiposdocumentos_Nis', 'Nis');
+    }
 }

@@ -20,7 +20,6 @@ Route::get('/', function () {
 
 Route::get('/login', [loginController::class, 'showLogin'])->name('login');
 Route::post('/login', [loginController::class, 'login']);
-
 Route::post('/logout', [loginController::class, 'logout'])->name('logout');
 
 Route::get('/usuarios/create', [loginController::class, 'create'])->name('usuarios.create');

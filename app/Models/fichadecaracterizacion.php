@@ -16,4 +16,13 @@ class fichadecaracterizacion extends Model
         /*'Nis',*/ 'Codigo', 'Denominacion', 'Cupo', 'FechaInicio', 'FechaFin', 'Observaciones', 'tblprogramasdeformacion_Nis', 'tblcentrosdeformacion_Nis'
     ];
     public $timestamps = false;
+
+    public function programasdeformacion()
+    {
+        return $this->belongsTo(programasdeformacion::class, 'tblprogramasdeformacion_Nis', 'Nis');
+    }
+    public function centrosdeformacion()
+    {
+        return $this->belongsTo(centrosdeformacion::class, 'tblcentrosdeformacion_Nis', 'Nis');
+    }
 }

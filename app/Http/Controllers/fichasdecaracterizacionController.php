@@ -13,12 +13,19 @@ class fichasdecaracterizacionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $fichasdecaracterizacion = DB::table('tblfichasdecaracterizacion')
-            ->GET();
-        //dd($fichasdecaracterizacion);
-        return view('FichasdeCaracterizacion.index', compact('fichasdecaracterizacion'));
+        $buscar = $request->buscar;
+
+        $fichasdecaracterizacion = fichadecaracterizacion::with(['programasdeformacion', 'centrosdeformacion'])
+            ->when($buscar, function ($query, $buscar) {
+                $query->where('Codigo', 'like', "%$buscar%")
+                    ->orWhere('Denominacion', 'like', "%$buscar%");
+            })
+            ->paginate(10)
+            ->withQueryString(); // mantiener la búsqueda
+
+        return view('fichasdecaracterizacion.index', compact('fichasdecaracterizacion', 'buscar'));
     }
 
     /**

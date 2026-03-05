@@ -11,12 +11,19 @@ class programasdeformacionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $programasdeformacion = DB::table('tblprogramasdeformacion')
-            ->GET();
-        //dd($programasdeformacion);
-        return view('Programas.index', compact('programasdeformacion'));
+        $buscar = $request->buscar;
+
+        $programasdeformacion = programasdeformacion::with([])
+            ->when($buscar, function ($query, $buscar) {
+                $query->where('Codigo', 'like', "%$buscar%")
+                    ->orWhere('Denominacion', 'like', "%$buscar%");
+            })
+            ->paginate(10)
+            ->withQueryString(); // mantiener la búsqueda
+
+        return view('programas.index', compact('programasdeformacion', 'buscar'));
     }
 
     /**

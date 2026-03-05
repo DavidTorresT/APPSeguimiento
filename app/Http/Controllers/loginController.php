@@ -29,7 +29,7 @@ class loginController extends Controller
 
             Auth::login($usuario);
 
-            return redirect()->route('panel');
+            return redirect()->route('welcome');
         }
 
         return back()->withErrors([

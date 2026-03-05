@@ -12,12 +12,19 @@ class regionalesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $regionales = DB::table('tblregionales')
-            ->GET();
-        //dd($regionales);
-        return view('Regionales.index', compact('regionales'));
+        $buscar = $request->buscar;
+
+        $regionales = regionales::with([])
+            ->when($buscar, function ($query, $buscar) {
+                $query->where('Codigo', 'like', "%$buscar%")
+                    ->orWhere('Denominacion', 'like', "%$buscar%");
+            })
+            ->paginate(10)
+            ->withQueryString(); // mantiener la búsqueda
+
+        return view('regionales.index', compact('regionales', 'buscar'));
     }
 
     /**

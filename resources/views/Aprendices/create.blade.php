@@ -154,7 +154,7 @@
 
                     <div class="text-end mt-3">
                         <a href="{{ route('aprendices.index') }}" class="btn btn-secondary">
-                            Volver
+                            <i class="bi bi-arrow-left"></i>Volver
                         </a>
                         <button type="submit" class="btn btn-success">
                             Guardar Aprendiz

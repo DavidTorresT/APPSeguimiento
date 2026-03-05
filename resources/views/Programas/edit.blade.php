@@ -1,63 +1,98 @@
-<?php
-?>
+@extends('layouts.app')
 
-    <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Editar Programa</title>
+@section('title', 'Editar Programa')
 
-</head>
-<body class="bg-light"><div class="container mt-5">
-    <div class="card shadow">
-        <div class="card-header bg-warning text-dark">
-            <h4>Editar Programa</h4>
-        </div>    <div class="card-body">
+@section('content')
 
+    <div class="container mt-4">
+        <div class="card shadow-lg border-0">
 
-            <form action="{{ route('programas.update', $programasdeformacion->Nis) }}" method="POST">
-                @csrf
-                @method('PUT')
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">Editar Programa de Formación</h4>
+            </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Nis</label>
-                    <input type="text" class="form-control"
-                           value="{{ $programasdeformacion->Nis }}" disabled>
-                </div>
+            <div class="card-body">
 
-                <div class="mb-3">
-                    <label class="form-label">Codigo</label>
-                    <input type="number" name="Codigo"
-                           value="{{ old('Codigo', $programasdeformacion->Codigo) }}"
-                           class="form-control">
-                </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-                <div class="mb-3">
-                    <label class="form-label">Denominación</label>
-                    <input type="text" name="Denominacion"
-                           value="{{ old('Denominacion', $programasdeformacion->Denominacion) }}"
-                           class="form-control">
-                </div>
+                <form action="{{ route('programas.update', $programasdeformacion->Nis) }}" method="POST">
+                    @csrf
+                    @method('PUT')
 
-                <div class="mb-3">
-                    <label class="form-label">Observaciones</label>
-                    <textarea name="Observaciones" class="form-control">{{ old('Observaciones', $programasdeformacion->Observaciones) }}</textarea>
-                </div>
+                    <div class="row">
 
-                <button type="submit" class="btn btn-warning">
-                    Actualizar
-                </button>
+                        {{-- Nis --}}
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nis</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="{{ $programasdeformacion->Nis }}"
+                                   disabled>
+                        </div>
 
-                <a href="{{ route('programas.index') }}" class="btn btn-secondary">
-                    Cancelar
-                </a>
-            </form>
+                        {{-- Codigo --}}
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Codigo</label>
+                            <input type="number"
+                                   name="Codigo"
+                                   value="{{ old('Codigo', $programasdeformacion->Codigo) }}"
+                                   class="form-control @error('Codigo') is-invalid @enderror">
 
+                            @error('Codigo')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
+                        {{-- Denominacion --}}
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Denominación</label>
+                            <input type="text"
+                                   name="Denominacion"
+                                   value="{{ old('Denominacion', $programasdeformacion->Denominacion) }}"
+                                   class="form-control @error('Denominacion') is-invalid @enderror">
+
+                            @error('Denominacion')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Observaciones --}}
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Observaciones</label>
+                            <textarea name="Observaciones"
+                                      class="form-control @error('Observaciones') is-invalid @enderror">{{ old('Observaciones', $programasdeformacion->Observaciones) }}</textarea>
+
+                            @error('Observaciones')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                    </div>
+
+                    <div class="text-end mt-3">
+
+                        <a href="{{ route('programas.index') }}" class="btn btn-secondary">
+                            Cancelar
+                        </a>
+
+                        <button type="submit" class="btn btn-warning">
+                            Actualizar
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
         </div>
     </div>
 
-</div></body>
-</html>
-
+@endsection

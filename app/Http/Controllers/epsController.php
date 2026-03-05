@@ -11,12 +11,19 @@ class epsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $eps = DB::table('tbleps')
-            ->GET();
-        //dd($eps);
-        return view('Eps.index', compact('eps'));
+        $buscar = $request->buscar;
+
+        $eps = eps::with([])
+            ->when($buscar, function ($query, $buscar) {
+                $query->where('NumDoc', 'like', "%$buscar%")
+                    ->orWhere('Denominacion', 'like', "%$buscar%");
+            })
+            ->paginate(10)
+            ->withQueryString(); // mantiener la búsqueda
+
+        return view('eps.index', compact('eps', 'buscar'));
     }
 
     /**

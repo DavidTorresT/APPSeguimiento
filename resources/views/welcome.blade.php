@@ -78,7 +78,7 @@
             <a href="{{ route('entecoformador.index') }}" class="text-decoration-none">
                 <div class="card card-hover text-center shadow p-4">
                     <i class="bi bi-diagram-3-fill text-primary fs-1"></i>
-                    <h5 class="mt-3">EnteCoformador</h5>
+                    <h5 class="mt-3">Entecoformador</h5>
                 </div>
             </a>
         </div>

@@ -12,12 +12,19 @@ class entecoformadorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $entecoformador = DB::table('tblentecoformador')
-            ->GET();
-        //dd($entecoformador);
-        return view('Entecoformador.index', compact('entecoformador'));
+        $buscar = $request->buscar;
+
+        $entecoformador = entecoformador::with(['tiposdocumentos'])
+            ->when($buscar, function ($query, $buscar) {
+                $query->where('NumDoc', 'like', "%$buscar%")
+                    ->orWhere('RazonSocial', 'like', "%$buscar%");
+            })
+            ->paginate(10)
+            ->withQueryString(); // mantiener la búsqueda
+
+        return view('entecoformador.index', compact('entecoformador', 'buscar'));
     }
 
     /**

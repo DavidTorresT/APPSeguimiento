@@ -3,6 +3,7 @@
 @section('title', 'Centros de formacion')
 
 @section('content')
+    <a href="{{ route('welcome') }}" class="btn btn-secondary">Regresar al panel</a>
 
     <div class="d-flex justify-content-between align-items-center mb-4 text-white">
         <h3 class="fw-bold">Lista de Centros de formacion</h3>

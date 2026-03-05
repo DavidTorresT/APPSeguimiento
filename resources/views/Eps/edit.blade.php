@@ -1,63 +1,106 @@
-<?php
-?>
+@extends('layouts.app')
 
-    <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Editar Eps</title>
+@section('title', 'Editar EPS')
 
-</head>
-<body class="bg-light"><div class="container mt-5">
-    <div class="card shadow">
-        <div class="card-header bg-warning text-dark">
-            <h4>Editar Eps</h4>
-        </div>    <div class="card-body">
+@section('content')
+
+    <div class="container mt-4">
+
+        <div class="card shadow-lg border-0">
+
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">Editar EPS</h4>
+            </div>
+
+            <div class="card-body">
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
 
-            <form action="{{ route('eps.update', $eps->Nis) }}" method="POST">
-                @csrf
-                @method('PUT')
+                <form action="{{ route('eps.update', $eps->Nis) }}" method="POST">
+                    @csrf
+                    @method('PUT')
 
-                <div class="mb-3">
-                    <label class="form-label">Nis</label>
-                    <input type="text" class="form-control"
-                           value="{{ $eps->Nis }}" disabled>
-                </div>
+                    <div class="row">
 
-                <div class="mb-3">
-                    <label class="form-label">Numero de documento</label>
-                    <input type="number" name="Numdoc"
-                           value="{{ old('Numdoc', $eps->Numdoc) }}"
-                           class="form-control">
-                </div>
+                        {{-- Nis --}}
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nis</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="{{ $eps->Nis }}"
+                                   disabled>
+                        </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Denominación</label>
-                    <input type="text" name="Denominacion"
-                           value="{{ old('Denominacion', $eps->Denominacion) }}"
-                           class="form-control">
-                </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Observaciones</label>
-                    <textarea name="Observaciones" class="form-control">{{ old('Observaciones', $eps->Observaciones) }}</textarea>
-                </div>
+                        {{-- Numero documento --}}
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Número de documento</label>
+                            <input type="number"
+                                   name="Numdoc"
+                                   value="{{ old('Numdoc', $eps->Numdoc) }}"
+                                   class="form-control @error('Numdoc') is-invalid @enderror">
 
-                <button type="submit" class="btn btn-warning">
-                    Actualizar
-                </button>
+                            @error('Numdoc')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                <a href="{{ route('eps.index') }}" class="btn btn-secondary">
-                    Cancelar
-                </a>
-            </form>
 
+                        {{-- Denominacion --}}
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Denominación</label>
+                            <input type="text"
+                                   name="Denominacion"
+                                   value="{{ old('Denominacion', $eps->Denominacion) }}"
+                                   class="form-control @error('Denominacion') is-invalid @enderror">
+
+                            @error('Denominacion')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+                        {{-- Observaciones --}}
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Observaciones</label>
+                            <textarea name="Observaciones"
+                                      class="form-control @error('Observaciones') is-invalid @enderror">{{ old('Observaciones', $eps->Observaciones) }}</textarea>
+
+                            @error('Observaciones')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                    </div>
+
+
+                    <div class="text-end mt-3">
+
+                        <a href="{{ route('eps.index') }}" class="btn btn-secondary">
+                            Cancelar
+                        </a>
+
+                        <button type="submit" class="btn btn-warning">
+                            Actualizar
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
 
         </div>
+
     </div>
 
-</div></body>
-</html>
-
+@endsection
