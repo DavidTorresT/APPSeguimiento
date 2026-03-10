@@ -13,7 +13,7 @@ class regionales extends Model
     protected $primaryKey = 'Nis';
     public $incrementing = true;
     protected $fillable = [
-        /*'Nis',*/ 'Codigo', 'Denominacion', 'Observaciones', 'contraseña'
+        /*'Nis',*/ 'Codigo', 'Denominacion', 'Observaciones'
     ];
     public $timestamps = false;
 }

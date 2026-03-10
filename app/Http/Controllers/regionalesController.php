@@ -40,32 +40,13 @@ class regionalesController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile('docPrueba')) {
-
-            $request->validate([
-                'docPrueba' => 'required|file'
-            ]);
-
-            $nomDoc = 'Prueba'.$request['documento'].'.'.$request->file('docPrueba')->extension();
-
-            $request->file('docPrueba')->move(
-                public_path('/Uploads/regionales/'),
-                $nomDoc);
-
-            return back()->with('registrar', 'Documento subido correctamente');
-
-        }
-
             $request->validate([
                 'Codigo' => 'required',
                 'Denominacion' => 'required',
-                'contraseña' => 'required'
             ],
                 [
-                    'Codigo.required' => 'El campo Codigo es obligatorio',
-                    'Codigo.unique' => 'El Codigo ya existe',
+                    'Codigo.required.unique' => 'El campo Codigo es obligatorio',
                     'Denominacion.required' => 'El campo Denominacion es obligatorio',
-                    'contraseña.required' => 'El campo Contraseña es obligatorio'
                 ]);
 
             /*if ($v->fails()){
@@ -75,8 +56,6 @@ class regionalesController extends Controller
             $Regionales->Codigo = $request->Codigo;
             $Regionales->Denominacion = $request->Denominacion;
             $Regionales->Observaciones = $request->Observaciones;
-            $Regionales->contraseña =bcrypt($request->contraseña);
-
 
             $Regionales->save();
 
@@ -117,10 +96,6 @@ class regionalesController extends Controller
         $regional->Codigo = $request->Codigo;
         $regional->Denominacion = $request->Denominacion;
         $regional->Observaciones = $request->Observaciones;
-
-        if ($request->filled('contraseña')) {
-            $regional->contraseña = bcrypt($request->contraseña);
-        }
 
         $regional->save();
 

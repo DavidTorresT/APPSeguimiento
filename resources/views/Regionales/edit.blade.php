@@ -25,7 +25,7 @@
                 @endif
 
 
-                <form action="{{ route('regionales.update', $regional->Nis) }}" method="POST">
+                <form action="{{ route('bitacoras.update', $regional->Nis) }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -80,26 +80,12 @@
                             @enderror
                         </div>
 
-
-                        {{-- Contraseña --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Contraseña</label>
-                            <input type="text"
-                                   name="contraseña"
-                                   value="{{ old('contraseña', $regional->contraseña) }}"
-                                   class="form-control @error('contraseña') is-invalid @enderror">
-
-                            @error('contraseña')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
                     </div>
 
 
                     <div class="text-end mt-3">
 
-                        <a href="{{ route('regionales.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('bitacoras.index') }}" class="btn btn-secondary">
                             Cancelar
                         </a>
 

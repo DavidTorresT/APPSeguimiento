@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\aprendicesController;
+use App\Http\Controllers\bitacorasController;
 use App\Http\Controllers\centrosdeformacionController;
 use App\Http\Controllers\entecoformadorController;
 use App\Http\Controllers\epsController;
@@ -29,8 +30,9 @@ Route::get('/welcome', function () {
     return view('welcome');
 })->middleware('auth')->name('welcome');
 
-
 Route::middleware('auth')->group(function () {
+
+    Route::resource('/bitacoras', bitacorasController::class);
 
     Route::resource('/aprendices', aprendicesController::class);
     Route::resource('/centrosdeformacion', centrosdeformacionController::class);

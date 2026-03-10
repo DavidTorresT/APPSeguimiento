@@ -25,7 +25,7 @@
                 @endif
 
 
-                <form action="{{ route('regionales.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('bitacoras.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -69,38 +69,12 @@
                             @enderror
                         </div>
 
-
-                        {{-- Contraseña --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Contraseña</label>
-                            <input type="password"
-                                   name="contraseña"
-                                   class="form-control @error('contraseña') is-invalid @enderror">
-
-                            @error('contraseña')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-
-                        {{-- Documento --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Documento</label>
-                            <input type="file"
-                                   name="docPrueba"
-                                   class="form-control @error('docPrueba') is-invalid @enderror">
-
-                            @error('docPrueba')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
                     </div>
 
 
                     <div class="text-end mt-3">
 
-                        <a href="{{ route('regionales.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('bitacoras.index') }}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left"></i>Volver
                         </a>
 

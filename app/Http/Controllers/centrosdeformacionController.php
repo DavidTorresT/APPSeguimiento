@@ -16,7 +16,7 @@ class centrosdeformacionController extends Controller
     {
         $buscar = $request->buscar;
 
-        $centrosdeformacion = centrosdeformacion::with(['regionales'])
+        $centrosdeformacion = centrosdeformacion::with(['bitacoras'])
             ->when($buscar, function ($query, $buscar) {
                 $query->where('Codigo', 'like', "%$buscar%")
                     ->orWhere('Denominacion', 'like', "%$buscar%")

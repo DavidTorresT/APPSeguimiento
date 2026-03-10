@@ -21,6 +21,15 @@
         </div>
 
         <div class="col-md-4 col-lg-3">
+            <a href="{{ route('bitacoras.index') }}" class="text-decoration-none">
+                <div class="card card-hover text-center shadow p-4">
+                    <i class="bi bi-journal-text text-success fs-1"></i>
+                    <h5 class="mt-3">Bitácoras</h5>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-lg-3">
             <a href="{{ route('centrosdeformacion.index') }}" class="text-decoration-none">
                 <div class="card card-hover text-center shadow p-4">
                     <i class="bi bi-building text-success fs-1"></i>
