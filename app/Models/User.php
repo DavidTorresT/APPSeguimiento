@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+
     protected $table = 'tblusuarios';
     protected $primaryKey = 'Nis';
     public $incrementing = true;

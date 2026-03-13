@@ -16,7 +16,7 @@ class centrosdeformacionController extends Controller
     {
         $buscar = $request->buscar;
 
-        $centrosdeformacion = centrosdeformacion::with(['bitacoras'])
+        $centrosdeformacion = centrosdeformacion::with(['regionales'])
             ->when($buscar, function ($query, $buscar) {
                 $query->where('Codigo', 'like', "%$buscar%")
                     ->orWhere('Denominacion', 'like', "%$buscar%")
@@ -25,7 +25,7 @@ class centrosdeformacionController extends Controller
             ->paginate(10)
             ->withQueryString(); // mantiener la búsqueda
 
-        return view('centrosdeformacion.index', compact('centrosdeformacion', 'buscar'));
+        return view('centrosdeformacion.index', compact('centrosdeformacion', 'buscar',));
     }
 
     /**
@@ -73,9 +73,11 @@ class centrosdeformacionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($Nis)
     {
-        //
+        $centro = centrosdeformacion::with(['regionales'])->findOrFail($Nis);
+
+        return view('centrosdeformacion.show', compact('centro'));
     }
 
     /**
@@ -100,13 +102,7 @@ class centrosdeformacionController extends Controller
             'tblregionales_Nis' => 'required',
         ]);
 
-        $centrosdeformacion = centrosdeformacion::findOrFail($Nis);
-        $centrosdeformacion->Codigo = $request->Codigo;
-        $centrosdeformacion->Denominacion = $request->Denominacion;
-        $centrosdeformacion->Direccion = $request->Direccion;
-        $centrosdeformacion->Observaciones = $request->Observaciones;
-        $centrosdeformacion->tblregionales_Nis = $request->tblregionales_Nis;
-        $centrosdeformacion->save();
+        centrosdeformacion::update($request->all());
 
         return redirect()->route('centrosdeformacion.index')->with('actualizar','Centro de formacion actualizado correctamente');
     }

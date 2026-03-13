@@ -47,15 +47,8 @@ class epsController extends Controller
                 'Numdoc.required' => 'El campo Numero de Documento es obligatorio',
                 'Denominacion.required' => 'El campo Denominacion es obligatorio',
             ]);
-        /*if ($v->fails()){
-            return back()->with('errors', $v->errors());
-        }*/
 
-        $Eps = new eps();
-        $Eps->Numdoc = $request->Numdoc;
-        $Eps->Denominacion = $request->Denominacion;
-        $Eps->Observaciones = $request->Observaciones;
-        $Eps->save();
+        eps::create($request->all());
 
         return redirect()->route('eps.create')->with('registrar','Eps registrada correctamente');
     }
@@ -63,9 +56,11 @@ class epsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($Nis)
     {
-        //
+        $eps = eps::with([])->findOrFail($Nis);
+
+        return view('eps.show', compact('eps'));
     }
 
     /**

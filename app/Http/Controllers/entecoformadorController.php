@@ -58,18 +58,8 @@ class entecoformadorController extends Controller
                 'Telefono.required' => 'El campo Telefono es obligatorio',
                 'CorreoInstitucional.required' => 'El campo Correo institucional es obligatorio',
             ]);
-        /*if ($v->fails()){
-            return back()->with('errors', $v->errors());
-        }*/
 
-        $Entecoformador = new entecoformador();
-        $Entecoformador->tbltiposdocumentos_Nis = $request->tbltiposdocumentos_Nis;
-        $Entecoformador->NumDoc = $request->NumDoc;
-        $Entecoformador->RazonSocial = $request->RazonSocial;
-        $Entecoformador->Direccion = $request->Direccion;
-        $Entecoformador->Telefono = $request->Telefono;
-        $Entecoformador->CorreoInstitucional = $request->CorreoInstitucional;
-        $Entecoformador->save();
+        entecoformador::create($request->all());
 
         return redirect()->route('entecoformador.create')->with('registrar','Entecoformador registrado correctamente');
     }
@@ -77,9 +67,11 @@ class entecoformadorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($Nis)
     {
-        //
+        $entecoformador = entecoformador::with(['tiposdocumentos'])->findOrFail($Nis);
+
+        return view('entecoformador.show', compact('entecoformador'));
     }
 
     /**
@@ -107,15 +99,7 @@ class entecoformadorController extends Controller
             'CorreoInstitucional' => 'required',
         ]);
 
-        $entecoformador = entecoformador::findOrFail($Nis);
-
-        $entecoformador->tbltiposdocumentos_Nis = $request->tbltiposdocumentos_Nis;
-        $entecoformador->NumDoc = $request->NumDoc;
-        $entecoformador->RazonSocial = $request->RazonSocial;
-        $entecoformador->Direccion = $request->Direccion;
-        $entecoformador->Telefono = $request->Telefono;
-        $entecoformador->CorreoInstitucional = $request->CorreoInstitucional;
-        $entecoformador->save();
+        entecoformador::update($request->all());
 
         return redirect()->route('entecoformador.index')->with('actualizar','Entecoformador actualizado correctamente');
     }

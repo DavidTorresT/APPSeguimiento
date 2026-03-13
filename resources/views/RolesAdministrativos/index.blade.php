@@ -45,8 +45,13 @@
 
                             <td class="text-center">
 
+                                <a href="{{ route('rolesadministrativos.show', $rol->Nis) }}"
+                                   class="btn btn-secondary btn-sm" title="Ver">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
                                 <a href="{{ route('rolesadministrativos.edit', $rol->Nis) }}"
-                                   class="btn btn-warning btn-sm">
+                                   class="btn btn-warning btn-sm" title="Editar">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
 
@@ -60,7 +65,7 @@
                                     @method('DELETE')
 
                                     <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-trash"></i>
+                                        <i class="bi bi-trash" title="Eliminar"></i>
                                     </button>
 
                                 </form>

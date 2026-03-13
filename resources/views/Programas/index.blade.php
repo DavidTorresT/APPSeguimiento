@@ -73,6 +73,11 @@
 
                             <td class="text-center">
 
+                                <a href="{{ route('programas.show', $programas->Nis) }}"
+                                   class="btn btn-secondary btn-sm" title="Ver">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
                                 <a href="{{ route('programas.edit', $programas->Nis) }}"
                                    class="btn btn-warning btn-sm">
                                     <i class="bi bi-pencil-square"></i>

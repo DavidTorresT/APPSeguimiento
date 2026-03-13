@@ -52,9 +52,11 @@ class rolesadministrativosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($Nis)
     {
-        //
+        $rol = rolesadministrativos::with([])->findOrFail($Nis);
+
+        return view('rolesadministrativos.show', compact('rol'));
     }
 
     /**

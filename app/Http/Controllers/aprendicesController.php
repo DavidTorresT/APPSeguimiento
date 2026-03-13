@@ -6,7 +6,6 @@ use App\Models\aprendices;
 use App\Models\eps;
 use App\Models\tiposdocumentos;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class aprendicesController extends Controller
 {
@@ -72,23 +71,8 @@ class aprendicesController extends Controller
                 'FechaNac.required' => 'El campo Fecha de Nacimiento es obligatorio',
                 'tbleps_Nis.required' => 'El campo Eps es obligatorio'
             ]);
-        /*if ($v->fails()){
-            return back()->with('errors', $v->errors());
-        }*/
 
-        $Aprendices = new aprendices();
-        $Aprendices->tbltiposdocumentos_Nis = $request->tbltiposdocumentos_Nis;
-        $Aprendices->NumDoc = $request->NumDoc;
-        $Aprendices->Nombres = $request->Nombres;
-        $Aprendices->Apellidos = $request->Apellidos;
-        $Aprendices->Direccion = $request->Direccion;
-        $Aprendices->Telefono = $request->Telefono;
-        $Aprendices->CorreoInstitucional = $request->CorreoInstitucional;
-        $Aprendices->CorreoPersonal = $request->CorreoPersonal;
-        $Aprendices->Sexo = $request->Sexo;
-        $Aprendices->FechaNac = $request->FechaNac;
-        $Aprendices->tbleps_Nis = $request->tbleps_Nis;
-        $Aprendices->save();
+        aprendices::create($request->all());
 
         return redirect()->route('aprendices.create')->with('registrar','Aprendiz registrado correctamente');
     }
@@ -96,9 +80,11 @@ class aprendicesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($Nis)
     {
-        //
+        $aprendiz = aprendices::with(['tipodocumento','eps'])->findOrFail($Nis);
+
+        return view('aprendices.show', compact('aprendiz'));
     }
 
     /**
@@ -132,19 +118,7 @@ class aprendicesController extends Controller
         ]);
 
         $aprendices = aprendices::findOrFail($Nis);
-
-        $aprendices->tbltiposdocumentos_Nis = $request->tbltiposdocumentos_Nis;
-        $aprendices->NumDoc = $request->NumDoc;
-        $aprendices->Nombres = $request->Nombres;
-        $aprendices->Apellidos = $request->Apellidos;
-        $aprendices->Direccion = $request->Direccion;
-        $aprendices->Telefono = $request->Telefono;
-        $aprendices->CorreoInstitucional = $request->CorreoInstitucional;
-        $aprendices->CorreoPersonal = $request->CorreoPersonal;
-        $aprendices->Sexo = $request->Sexo;
-        $aprendices->FechaNac = $request->FechaNac;
-        $aprendices->tbleps_Nis = $request->tbleps_Nis;
-        $aprendices->save();
+        $aprendices->update($request->all());
 
         return redirect()->route('aprendices.index')->with('actualizar','Aprendiz actualizado correctamente');
     }
@@ -154,7 +128,9 @@ class aprendicesController extends Controller
      */
     public function destroy($Nis)
     {
-        aprendices::destroy($Nis);
+        $aprendiz = aprendices::findOrFail($Nis);
+
+        $aprendiz->delete();
 
         return redirect()->route('aprendices.index')->with('eliminar','Aprendiz eliminado correctamente');
     }

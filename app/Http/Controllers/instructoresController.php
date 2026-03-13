@@ -80,20 +80,7 @@ class instructoresController extends Controller
             return back()->with('errors', $v->errors());
         }*/
 
-        $Instructores = new instructores();
-        $Instructores->tbltiposdocumentos_Nis = $request->tbltiposdocumentos_Nis;
-        $Instructores->NumDoc = $request->NumDoc;
-        $Instructores->Nombres = $request->Nombres;
-        $Instructores->Apellidos = $request->Apellidos;
-        $Instructores->Direccion = $request->Direccion;
-        $Instructores->Telefono = $request->Telefono;
-        $Instructores->CorreoInstitucional = $request->CorreoInstitucional;
-        $Instructores->CorreoPersonal = $request->CorreoPersonal;
-        $Instructores->Sexo = $request->Sexo;
-        $Instructores->FechaNac = $request->FechaNac;
-        $Instructores->tbleps_Nis = $request->tbleps_Nis;
-        $Instructores->tblrolesadministrativos_Nis = $request->tblrolesadministrativos_Nis;
-        $Instructores->save();
+        instructores::create($request->all());
 
         return redirect()->route('instructores.create')->with('registrar','Instructor registrado correctamente');
     }
@@ -101,9 +88,11 @@ class instructoresController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($Nis)
     {
-        //
+        $instructor = instructores::with(['tipodocumento','eps'])->findOrFail($Nis);
+
+        return view('instructores.show', compact('instructor'));
     }
 
     /**

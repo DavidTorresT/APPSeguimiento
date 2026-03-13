@@ -49,15 +49,7 @@ class regionalesController extends Controller
                     'Denominacion.required' => 'El campo Denominacion es obligatorio',
                 ]);
 
-            /*if ($v->fails()){
-                return back()->with('errors', $v->errors());
-            }*/
-            $Regionales = new regionales();
-            $Regionales->Codigo = $request->Codigo;
-            $Regionales->Denominacion = $request->Denominacion;
-            $Regionales->Observaciones = $request->Observaciones;
-
-            $Regionales->save();
+            regionales::create($request->all());
 
             return redirect()->route('regionales.create')->with('registrar','Regional registrada correctamente');
 
@@ -67,9 +59,11 @@ class regionalesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($Nis)
     {
-        //
+        $regional = regionales::with([])->findOrFail($Nis);
+
+        return view('regionales.show', compact('regional'));
     }
 
     /**
@@ -91,13 +85,7 @@ class regionalesController extends Controller
             'Denominacion' => 'required',
         ]);
 
-        $regional = regionales::findOrFail($Nis);
-
-        $regional->Codigo = $request->Codigo;
-        $regional->Denominacion = $request->Denominacion;
-        $regional->Observaciones = $request->Observaciones;
-
-        $regional->save();
+        regionales::update($request->all());
 
         return redirect()->route('regionales.index')->with('actualizar','Regional actualizada correctamente');
     }

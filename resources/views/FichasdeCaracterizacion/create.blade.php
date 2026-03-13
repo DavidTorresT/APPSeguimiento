@@ -170,11 +170,14 @@
 
         <script>
             Swal.fire({
-                title: 'Registro exitoso',
-                text: "{{ session('registrar') }}",
+                title: '¡Registro exitoso!',
+                text : "{{session('registrar')}}",
                 icon: 'success',
+                position: 'top-end',
+                showConfirmButton: false,
                 timer: 1500,
-                showConfirmButton: false
+                background: '#f8f9fa',
+                backdrop: 'rgba(0,0,0,0.4)'
             });
         </script>
 

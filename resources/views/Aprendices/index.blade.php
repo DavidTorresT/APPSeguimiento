@@ -75,22 +75,27 @@
 
                             <td class="text-center">
 
+                                <a href="{{ route('aprendices.show', $aprendiz->Nis) }}"
+                                   class="btn btn-secondary btn-sm" title="Ver">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
                                 <a href="{{ route('aprendices.edit', $aprendiz->Nis) }}"
-                                   class="btn btn-warning btn-sm">
+                                   class="btn btn-warning btn-sm" title="Editar">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
 
                                 <form action="{{ route('aprendices.destroy', $aprendiz->Nis) }}"
                                       method="POST"
                                       class="form-eliminar d-inline"
-                                      data-numDoc="{{ $aprendiz->NumDoc }}"
-                                      data-nombres="{{ $aprendiz->Nombres }}"
-                                      data-apellidos="{{ $aprendiz->Apellidos }}">
+                                      data-numDoc="{{ e($aprendiz->NumDoc) }}"
+                                      data-nombres="{{ e($aprendiz->Nombres) }}"
+                                      data-apellidos="{{ e($aprendiz->Apellidos) }}">
                                     @csrf
                                     @method('DELETE')
 
                                     <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-trash"></i>
+                                        <i class="bi bi-trash" title="Eliminar"></i>
                                     </button>
                                 </form>
 
@@ -128,13 +133,13 @@
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
 
-                let numDoc = this.dataset.numDoc;
+                let numDoc = this.dataset.numdoc;
                 let nombres = this.dataset.nombres;
                 let apellidos = this.dataset.apellidos;
 
                 Swal.fire({
                     title: '¿Eliminar aprendiz?',
-                    text: `Documento: ${numDoc} | ${nombres} ${apellidos}`,
+                    text: `Numero de documento: ${numDoc} | ${nombres} ${apellidos}`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',

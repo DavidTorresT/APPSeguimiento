@@ -62,19 +62,8 @@ class fichasdecaracterizacionController extends Controller
                 'tblprogramasdeformacion_Nis.required' => 'El campo Programa de formacion es obligatorio',
                 'tblcentrosdeformacion_Nis.required' => 'El campo Centro de formacion es obligatorio',
             ]);
-        /*if ($v->fails()){
-            return back()->with('errors', $v->errors());
-        }*/
 
-        $Fichadecaracterizacion = new fichadecaracterizacion ();
-        $Fichadecaracterizacion->Codigo = $request->Codigo;
-        $Fichadecaracterizacion->Denominacion = $request->Denominacion;
-        $Fichadecaracterizacion->Cupo = $request->Cupo;
-        $Fichadecaracterizacion->FechaInicio = $request->FechaInicio;
-        $Fichadecaracterizacion->FechaFin = $request->FechaFin;
-        $Fichadecaracterizacion->tblprogramasdeformacion_Nis = $request->tblprogramasdeformacion_Nis;
-        $Fichadecaracterizacion->tblcentrosdeformacion_Nis = $request->tblcentrosdeformacion_Nis;
-        $Fichadecaracterizacion->save();
+        fichadecaracterizacion::create($request->all());
 
         return redirect()->route('fichasdecaracterizacion.create')->with('registrar','Ficha de caracterizacion registrada correctamente');
     }
@@ -82,9 +71,11 @@ class fichasdecaracterizacionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($Nis)
     {
-        //
+        $ficha = fichadecaracterizacion::with(['programasdeformacion', 'centrosdeformacion'])->findOrFail($Nis);
+
+        return view('fichasdecaracterizacion.show', compact('ficha'));
     }
 
     /**
@@ -114,15 +105,7 @@ class fichasdecaracterizacionController extends Controller
             'tblcentrosdeformacion_Nis' => 'required',
         ]);
 
-        $fichasdecaracterizacion = fichadecaracterizacion::findOrFail($Nis);
-        $fichasdecaracterizacion->Codigo = $request->Codigo;
-        $fichasdecaracterizacion->Denominacion = $request->Denominacion;
-        $fichasdecaracterizacion->Cupo = $request->Cupo;
-        $fichasdecaracterizacion->FechaInicio = $request->FechaInicio;
-        $fichasdecaracterizacion->FechaFin = $request->FechaFin;
-        $fichasdecaracterizacion->tblprogramasdeformacion_Nis = $request->tblprogramasdeformacion_Nis;
-        $fichasdecaracterizacion->tblcentrosdeformacion_Nis = $request->tblcentrosdeformacion_Nis;
-        $fichasdecaracterizacion->save();
+        fichadecaracterizacion::update($request->all());
 
         return redirect()->route('fichasdecaracterizacion.index')->with('actualizar','Ficha de caracterizacion actualizada correctamente');
     }

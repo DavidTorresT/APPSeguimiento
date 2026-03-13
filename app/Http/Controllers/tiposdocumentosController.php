@@ -54,9 +54,11 @@ class tiposdocumentosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($Nis)
     {
-        //
+        $tipo = tiposdocumentos::with([])->findOrFail($Nis);
+
+        return view('tiposdocumentos.show', compact('tipo'));
     }
 
     /**

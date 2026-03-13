@@ -47,15 +47,8 @@ class programasdeformacionController extends Controller
                 'Codigo.required' => 'El campo Codigo es obligatorio',
                 'Denominacion.required' => 'El campo Denominacion es obligatorio',
             ]);
-        /*if ($v->fails()){
-            return back()->with('errors', $v->errors());
-        }*/
 
-        $Programasdeformacion = new programasdeformacion();
-        $Programasdeformacion->Codigo = $request->Codigo;
-        $Programasdeformacion->Denominacion = $request->Denominacion;
-        $Programasdeformacion->Observaciones = $request->Observaciones;
-        $Programasdeformacion->save();
+        programasdeformacion::create($request->all());
 
         return redirect()->route('programas.create')->with('registrar','Programa registrado correctamente');
     }
@@ -63,9 +56,11 @@ class programasdeformacionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($Nis)
     {
-        //
+        $programa = programasdeformacion::with([])->findOrFail($Nis);
+
+        return view('programas.show', compact('programa'));
     }
 
     /**
@@ -87,13 +82,7 @@ class programasdeformacionController extends Controller
             'Denominacion' => 'required',
         ]);
 
-        $programasdeformacion = programasdeformacion::findOrFail($Nis);
-
-        $programasdeformacion->Codigo = $request->Codigo;
-        $programasdeformacion->Denominacion = $request->Denominacion;
-        $programasdeformacion->Observaciones = $request->Observaciones;
-
-        $programasdeformacion->save();
+        programasdeformacion::update($request->all());
 
         return redirect()->route('programas.index')->with('actualizar','Programa actualizada correctamente');
     }

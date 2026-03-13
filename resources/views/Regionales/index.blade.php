@@ -10,7 +10,7 @@
 
         <h3 class="fw-bold">Lista de Regionales</h3>
 
-        <a href="{{ route('bitacoras.create') }}" class="btn btn-light">
+        <a href="{{ route('regionales.create') }}" class="btn btn-light">
             <i class="bi bi-plus-circle"></i> Nueva Regional
         </a>
 
@@ -24,7 +24,7 @@
             <div class="table-responsive">
 
                 {{-- BUSCADOR --}}
-                <form method="GET" action="{{ route('bitacoras.index') }}" class="mb-3">
+                <form method="GET" action="{{ route('regionales.index') }}" class="mb-3">
 
                     <div class="row">
 
@@ -44,7 +44,7 @@
                                 Buscar
                             </button>
 
-                            <a href="{{ route('bitacoras.index') }}" class="btn btn-secondary">
+                            <a href="{{ route('regionales.index') }}" class="btn btn-secondary">
                                 Limpiar
                             </a>
 
@@ -82,12 +82,17 @@
 
                             <td class="text-center">
 
-                                <a href="{{ route('bitacoras.edit', $regional->Nis) }}"
+                                <a href="{{ route('regionales.show', $regional->Nis) }}"
+                                   class="btn btn-secondary btn-sm" title="Ver">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
+                                <a href="{{ route('regionales.edit', $regional->Nis) }}"
                                    class="btn btn-warning btn-sm">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
 
-                                <form action="{{ route('bitacoras.destroy', $regional->Nis) }}"
+                                <form action="{{ route('regionales.destroy', $regional->Nis) }}"
                                       method="POST"
                                       class="form-eliminar d-inline"
                                       data-nis="{{ $regional->Nis }}"
@@ -102,17 +107,6 @@
                                     </button>
 
                                 </form>
-
-
-                                @if($regional->docPrueba)
-
-                                    <a href="{{ asset('Uploads/bitacoras/'.$regional->docPrueba) }}"
-                                       target="_blank"
-                                       class="btn btn-info btn-sm">
-                                        <i class="bi bi-file-earmark-text"></i>
-                                    </a>
-
-                                @endif
 
                             </td>
 
